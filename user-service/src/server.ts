@@ -1,12 +1,9 @@
 import express from "express";
-import pool from "./db.js";
+import registerRouter from "./routes/register.js";
 
-const port = 1337;
-
+const PORT = 4000;
 const app = express();
 
-app.get('/', (req, res) => {
-    res.sendStatus(200);
-})
-
-app.listen(port, () => console.log(`Server has started on port: ${port}`));
+app.use(express.json());
+app.use("/register", registerRouter);
+app.listen(PORT, () => console.log(`Server has started on port: ${PORT}`));

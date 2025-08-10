@@ -1,11 +1,17 @@
-import { Pool } from "pg";
+import { Sequelize } from "sequelize";
 
-const pool = new Pool({
-  host: "user-db",
-  port: 5432,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
-});
+const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+let database: Sequelize;
 
-export default pool;
+if (!DB_NAME || !DB_USER || !DB_PASSWORD || !DB_HOST) {
+  throw new Error("Missing required DB env variables");
+} else {
+  database = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+    host: DB_HOST,
+    dialect: "postgres",
+    port: 5432,
+    logging: false,
+  });
+}
+
+export default database;

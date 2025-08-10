@@ -1,21 +1,22 @@
 import { Response, Request, NextFunction } from "express";
 import { CONSTANTS } from "../constants.js";
 import HttpError from "../httpError.js";
+import { HTTP_RESPONSE_CODES } from "../enums/http-response-codes.js";
 
 export const validateUserCredentials = (req: Request, res: Response, next: NextFunction) => {
   const { user_email, user_pwd } = req.body;
 
   if (!user_email || !user_pwd) {
-    return next(new HttpError("Email and password are required", CONSTANTS.STATUS_CODES.BAD_REQUEST));
+    return next(new HttpError("Email and password are required", HTTP_RESPONSE_CODES.BAD_REQUEST));
   }
   if (!CONSTANTS.EMAIL_REGEX.test(user_email)) {
-    return next(new HttpError("Email address is not correctly formatted", CONSTANTS.STATUS_CODES.BAD_REQUEST));
+    return next(new HttpError("Email address is not correctly formatted", HTTP_RESPONSE_CODES.BAD_REQUEST));
   }
   if (user_pwd && user_pwd.length < CONSTANTS.MIN_PASSWORD_LENGTH) {
     return next(
       new HttpError(
         `Password should be at least ${CONSTANTS.MIN_PASSWORD_LENGTH} characters long`,
-        CONSTANTS.STATUS_CODES.BAD_REQUEST
+        HTTP_RESPONSE_CODES.BAD_REQUEST
       )
     );
   }
@@ -27,12 +28,12 @@ export const validateJwtConfig = (req: Request, res: Response, next: NextFunctio
   if (!process.env.JWT_SECRET) {
     // Only Log the config issue. Send generic error message to the client
     console.error("JWT_SECRET environment variable is not set");
-    return next(new HttpError("Internal server error", CONSTANTS.STATUS_CODES.INTERNAL_SERVER_ERROR));
+    return next(new HttpError("Internal server error", HTTP_RESPONSE_CODES.INTERNAL_SERVER_ERROR));
   }
   if (!process.env.JWT_EXPIRES_IN) {
     // Only Log the config issue. Send generic error message to the client
     console.error("JWT_EXPIRES_IN environment variable is not set");
-    return next(new HttpError("Internal server error", CONSTANTS.STATUS_CODES.INTERNAL_SERVER_ERROR));
+    return next(new HttpError("Internal server error", HTTP_RESPONSE_CODES.INTERNAL_SERVER_ERROR));
   }
 
   next();

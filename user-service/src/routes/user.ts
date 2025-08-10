@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { validateJwtConfig, validateUserCredentials } from "./../middlewares/validate.js";
 import User from "../models/user.js";
-import { CONSTANTS } from "../constants.js";
+import { HTTP_RESPONSE_CODES } from "../enums/http-response-codes.js";
 
 const userRouter = express.Router();
 
@@ -12,11 +12,11 @@ userRouter.post("/sign-up", validateJwtConfig, validateUserCredentials, async (r
     const { user_email, user_pwd } = req.body;
 
     const existingUser = await User.findOne({ where: { user_email } });
-    if (existingUser) return res.status(CONSTANTS.STATUS_CODES.CONFLICT).json({ message: "Email already registered" });
+    if (existingUser) return res.status(HTTP_RESPONSE_CODES.CONFLICT).json({ message: "Email already registered" });
 
     const hashedPassword = await bcrypt.hash(user_pwd, 10);
     await User.create({ user_email, user_pwd: hashedPassword });
-    res.status(CONSTANTS.STATUS_CODES.CREATED).json({ message: "User registered successfully" });
+    res.status(HTTP_RESPONSE_CODES.CREATED).json({ message: "User registered successfully" });
   } catch (err) {
     next(err);
   }
@@ -28,11 +28,11 @@ userRouter.post("/login", validateJwtConfig, validateUserCredentials, async (req
 
     const user = await User.findOne({ where: { user_email } });
     if (!user)
-      return res.status(CONSTANTS.STATUS_CODES.UNAUTHORIZED).json({ message: "Unauthorized: Invalid credentials" });
+      return res.status(HTTP_RESPONSE_CODES.UNAUTHORIZED).json({ message: "Unauthorized: Invalid credentials" });
 
     const isMatch = await bcrypt.compare(user_pwd, user.user_pwd);
     if (!isMatch)
-      return res.status(CONSTANTS.STATUS_CODES.UNAUTHORIZED).json({ message: "Unauthorized: Invalid credentials" });
+      return res.status(HTTP_RESPONSE_CODES.UNAUTHORIZED).json({ message: "Unauthorized: Invalid credentials" });
 
     // process.env.JWT_SECRET as string because it has been checked by the middleware 'validateJwtConfig'
     const token = jwt.sign(
@@ -43,7 +43,7 @@ userRouter.post("/login", validateJwtConfig, validateUserCredentials, async (req
       }
     );
 
-    res.status(CONSTANTS.STATUS_CODES.OK).json({
+    res.status(HTTP_RESPONSE_CODES.OK).json({
       token,
       user: {
         id: user.id,

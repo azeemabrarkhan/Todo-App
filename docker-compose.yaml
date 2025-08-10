@@ -1,21 +1,29 @@
-version: "1"
+version: "3.8"
 services:
   user-db:
     image: postgres
     volumes:
       - user-db-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
-      POSTGRES_USER: ${USER_DB_USER}
-      POSTGRES_DB: ${USER_DB_NAME}
+      POSTGRES_PASSWORD: "${USER_DB_PASSWORD}"
+      POSTGRES_USER: "${USER_DB_USER}"
+      POSTGRES_DB: "${USER_DB_NAME}"
+    ports:
+      - "5432:5432"
+
   user-service:
     image: user-service
     ports:
-      - ${HOST_PORT}:4000
+      - "${HOST_PORT}:4000"
     environment:
-      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
-      POSTGRES_USER: ${USER_DB_USER}
-      POSTGRES_DB: ${USER_DB_NAME}
+      DB_HOST: "user-db"
+      DB_USER: "${USER_DB_USER}"
+      DB_PASSWORD: "${USER_DB_PASSWORD}"
+      DB_NAME: "${USER_DB_NAME}"
+      JWT_SECRET: "${JWT_SECRET}"
+      JWT_EXPIRES_IN: "${JWT_EXPIRES_IN}"
+    depends_on:
+      - user-db
 
 volumes:
   user-db-data:

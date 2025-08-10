@@ -4,6 +4,8 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import User from "../models/user.js";
 import { CONSTANTS } from "../constants.js";
 
+const userRouter = express.Router();
+
 const validateUserCredentials = (req: Request, res: Response) => {
   const { user_email, user_pwd } = req.body;
 
@@ -35,8 +37,6 @@ const handleError = (res: Response, err: unknown) => {
       .json({ error: "Unknown error occurred" });
   }
 };
-
-const userRouter = express.Router();
 
 userRouter.post("/sign-up", async (req, res) => {
   try {

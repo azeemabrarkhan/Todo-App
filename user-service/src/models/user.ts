@@ -13,10 +13,7 @@ interface UserAttributes {
 interface UserCreationAttributes
   extends Optional<UserAttributes, "id" | "uuid" | "createdAt" | "updatedAt"> {}
 
-class User
-  extends Model<UserAttributes, UserCreationAttributes>
-  implements UserAttributes
-{
+class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public uuid!: string;
   public user_email!: string;

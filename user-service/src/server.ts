@@ -1,8 +1,8 @@
 import express from "express";
 import database from "./db.js";
 import userRouter from "./routes/user.js";
+import { CONSTANTS } from "./constants.js";
 
-const PORT = 4000;
 const app = express();
 
 app.use(express.json());
@@ -13,7 +13,9 @@ if (database !== undefined) {
     .sync()
     .then(() => {
       console.log("Database connected & models synced");
-      app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+      app.listen(CONSTANTS.API_PORT, () =>
+        console.log(`Server running on port ${CONSTANTS.API_PORT}`)
+      );
     })
     .catch((err) => console.error("DB connection error:", err));
 }

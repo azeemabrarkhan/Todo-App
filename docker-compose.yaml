@@ -8,13 +8,11 @@ services:
       POSTGRES_PASSWORD: "${USER_DB_PASSWORD}"
       POSTGRES_USER: "${USER_DB_USER}"
       POSTGRES_DB: "${USER_DB_NAME}"
-    ports:
-      - "5432:5432"
 
   user-service:
     image: user-service
     ports:
-      - "${HOST_PORT}:4000"
+      - "${USER_SERVICE_PORT}:4000"
     environment:
       DB_HOST: "user-db"
       DB_USER: "${USER_DB_USER}"

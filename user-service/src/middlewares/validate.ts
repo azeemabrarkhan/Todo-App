@@ -5,11 +5,12 @@ import { HTTP_RESPONSE_CODES } from "../enums/http-response-codes.js";
 
 export const validateUserCredentials = (req: Request, res: Response, next: NextFunction) => {
   const { user_email, user_pwd } = req.body;
+  const trimedUserEmail = user_email.trim();
 
-  if (!user_email || !user_pwd) {
+  if (!trimedUserEmail || !user_pwd) {
     return next(new HttpError("Email and password are required", HTTP_RESPONSE_CODES.BAD_REQUEST));
   }
-  if (!CONSTANTS.EMAIL_REGEX.test(user_email)) {
+  if (!CONSTANTS.EMAIL_REGEX.test(trimedUserEmail)) {
     return next(new HttpError("Email address is not correctly formatted", HTTP_RESPONSE_CODES.BAD_REQUEST));
   }
   if (user_pwd && user_pwd.length < CONSTANTS.MIN_PASSWORD_LENGTH) {

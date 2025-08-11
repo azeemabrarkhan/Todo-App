@@ -19,3 +19,5 @@ if (database !== undefined) {
     })
     .catch((err) => console.error("User DB connection error:", err));
 }
+
+export default app;

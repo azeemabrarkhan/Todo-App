@@ -6,17 +6,6 @@ import { authenticateJWT, CustomRequest } from "../middlewares/auth.js";
 
 const todoRouter = express.Router();
 
-todoRouter.get("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
-  try {
-    const { user_uuid } = req as CustomRequest;
-
-    const todos = await Todo.findAll({ where: { user_uuid } });
-    res.status(HTTP_RESPONSE_CODES.OK).json({ todos });
-  } catch (err) {
-    next(err);
-  }
-});
-
 todoRouter.post("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
   try {
     const { user_uuid } = req as CustomRequest;
@@ -31,6 +20,17 @@ todoRouter.post("/", validateJwtConfig, authenticateJWT, async (req, res, next) 
       message: "Todo created successfully",
       todo,
     });
+  } catch (err) {
+    next(err);
+  }
+});
+
+todoRouter.get("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
+  try {
+    const { user_uuid } = req as CustomRequest;
+
+    const todos = await Todo.findAll({ where: { user_uuid } });
+    res.status(HTTP_RESPONSE_CODES.OK).json({ todos });
   } catch (err) {
     next(err);
   }
@@ -78,14 +78,13 @@ todoRouter.delete("/", validateJwtConfig, authenticateJWT, async (req, res, next
       return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Todo uuid is required" });
     }
 
-    console.log({ uuid, user_uuid });
     const deletedCount = await Todo.destroy({ where: { uuid, user_uuid } });
 
     if (deletedCount === 0) {
       return res.status(HTTP_RESPONSE_CODES.NOT_FOUND).json({ message: "Todo not found" });
     }
 
-    res.status(HTTP_RESPONSE_CODES.OK).json({ message: "Todo deleted successfully" });
+    res.status(HTTP_RESPONSE_CODES.NO_CONTENT).json({ message: "Todo deleted successfully" });
   } catch (err) {
     next(err);
   }

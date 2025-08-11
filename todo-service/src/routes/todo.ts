@@ -56,7 +56,6 @@ todoRouter.put("/", validateJwtConfig, authenticateJWT, async (req, res, next) =
       return res.status(HTTP_RESPONSE_CODES.NOT_FOUND).json({ message: "Todo not found" });
     }
 
-    // Update the todo content
     todo.content = content.trim();
     await todo.save();
 

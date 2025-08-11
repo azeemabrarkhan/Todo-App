@@ -20,6 +20,9 @@ services:
 
   user-service:
     image: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
     ports:
       - "${USER_SERVICE_PORT}:4000"
     environment:
@@ -34,6 +37,9 @@ services:
 
   todo-service:
     image: todo-service
+    build:
+      context: ./todo-service
+      dockerfile: Dockerfile
     ports:
       - "${TODO_SERVICE_PORT}:5000"
     environment:

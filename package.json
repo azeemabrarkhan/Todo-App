@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "workspaces": [
+    "user-service",
+    "todo-service"
+  ],
+  "scripts": {
+    "test:user": "npm --workspace=user-service run test",
+    "test:todo": "npm --workspace=todo-service run test",
+    "test:all": "npm run test:user && npm run test:todo"
+  }
+}

@@ -1,26 +1,16 @@
 {
-  "name": "todo-app",
+  "name": "user-service",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "user service api for the Todo application",
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src --exec \"node --loader ts-node/esm\" src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "vitest"
+    "test": "vitest --run"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/azeemabrarkhan/Todo-App.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/azeemabrarkhan/Todo-App/issues"
-  },
-  "homepage": "https://github.com/azeemabrarkhan/Todo-App#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",

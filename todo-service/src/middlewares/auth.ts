@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { HTTP_RESPONSE_CODES } from "../enums/http-response-codes.js";
+import HttpError from "../httpError.js";
 
 interface JwtPayload {
   uuid: string;
@@ -14,9 +15,12 @@ export interface CustomRequest extends Request {
 
 export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.header("Authorization");
-
   const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(HTTP_RESPONSE_CODES.UNAUTHORIZED).json({ message: "Access denied. No token provided" });
+
+  if (!token) {
+    const error = new HttpError("Access denied. No token provided", HTTP_RESPONSE_CODES.UNAUTHORIZED);
+    return next(error);
+  }
 
   try {
     // process.env.JWT_SECRET as string because it should already been checked by the middleware 'validateJwtConfig'
@@ -27,6 +31,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
     customReq.user_email = user_email;
     next();
   } catch (ex) {
-    res.status(HTTP_RESPONSE_CODES.UNAUTHORIZED).json({ message: "Missing or invalid token" });
+    const error = new HttpError("Missing or invalid token", HTTP_RESPONSE_CODES.UNAUTHORIZED);
+    next(error);
   }
 };

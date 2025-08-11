@@ -3,6 +3,7 @@ import Todo from "../models/todo.js";
 import { HTTP_RESPONSE_CODES } from "../enums/http-response-codes.js";
 import { validateJwtConfig, validateContent, validateTodoUuid } from "../middlewares/validate.js";
 import { authenticateJWT, CustomRequest } from "../middlewares/auth.js";
+import HttpError from "../httpError.js";
 
 const todoRouter = express.Router();
 
@@ -41,7 +42,8 @@ todoRouter.patch("/", validateJwtConfig, authenticateJWT, validateTodoUuid, vali
     const todo = await Todo.findOne({ where: { uuid, user_uuid } });
 
     if (!todo) {
-      return res.status(HTTP_RESPONSE_CODES.NOT_FOUND).json({ message: "Todo not found" });
+      const error = new HttpError("Todo not found", HTTP_RESPONSE_CODES.NOT_FOUND);
+      return next(error);
     }
 
     todo.content = content.trim();
@@ -64,7 +66,8 @@ todoRouter.delete("/", validateJwtConfig, authenticateJWT, validateTodoUuid, asy
     const deletedCount = await Todo.destroy({ where: { uuid, user_uuid } });
 
     if (deletedCount === 0) {
-      return res.status(HTTP_RESPONSE_CODES.NOT_FOUND).json({ message: "Todo not found" });
+      const error = new HttpError("Todo not found", HTTP_RESPONSE_CODES.NOT_FOUND);
+      return next(error);
     }
 
     res.sendStatus(HTTP_RESPONSE_CODES.NO_CONTENT);

@@ -16,7 +16,8 @@ export const validateContent = (req: Request, res: Response, next: NextFunction)
   const { content } = req.body;
 
   if (!content || typeof content !== "string" || !content.trim()) {
-    return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Content is required" });
+    const error = new HttpError("Content is required", HTTP_RESPONSE_CODES.BAD_REQUEST);
+    return next(error);
   }
 
   next();
@@ -26,7 +27,8 @@ export const validateTodoUuid = (req: Request, res: Response, next: NextFunction
   const { uuid } = req.body;
 
   if (!uuid || typeof uuid !== "string") {
-    return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Todo uuid is required" });
+    const error = new HttpError("Todo uuid is required", HTTP_RESPONSE_CODES.BAD_REQUEST);
+    return next(error);
   }
 
   next();

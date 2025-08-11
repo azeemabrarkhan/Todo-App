@@ -11,3 +11,23 @@ export const validateJwtConfig = (req: Request, res: Response, next: NextFunctio
 
   next();
 };
+
+export const validateContent = (req: Request, res: Response, next: NextFunction) => {
+  const { content } = req.body;
+
+  if (!content || typeof content !== "string" || !content.trim()) {
+    return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Content is required" });
+  }
+
+  next();
+};
+
+export const validateTodoUuid = (req: Request, res: Response, next: NextFunction) => {
+  const { uuid } = req.body;
+
+  if (!uuid || typeof uuid !== "string") {
+    return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Todo uuid is required" });
+  }
+
+  next();
+};

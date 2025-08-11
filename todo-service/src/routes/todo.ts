@@ -1,19 +1,15 @@
 import express from "express";
 import Todo from "../models/todo.js";
 import { HTTP_RESPONSE_CODES } from "../enums/http-response-codes.js";
-import { validateJwtConfig } from "../middlewares/validate.js";
+import { validateJwtConfig, validateContent, validateTodoUuid } from "../middlewares/validate.js";
 import { authenticateJWT, CustomRequest } from "../middlewares/auth.js";
 
 const todoRouter = express.Router();
 
-todoRouter.post("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
+todoRouter.post("/", validateJwtConfig, authenticateJWT, validateContent, async (req, res, next) => {
   try {
     const { user_uuid } = req as CustomRequest;
     const { content } = req.body;
-
-    if (!content || typeof content !== "string" || !content.trim()) {
-      return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Content is required" });
-    }
 
     const todo = await Todo.create({ content: content.trim(), user_uuid });
     res.status(HTTP_RESPONSE_CODES.CREATED).json({
@@ -36,18 +32,10 @@ todoRouter.get("/", validateJwtConfig, authenticateJWT, async (req, res, next) =
   }
 });
 
-todoRouter.patch("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
+todoRouter.patch("/", validateJwtConfig, authenticateJWT, validateTodoUuid, validateContent, async (req, res, next) => {
   try {
     const { user_uuid } = req as CustomRequest;
     const { uuid, content } = req.body;
-
-    if (!uuid || typeof uuid !== "string") {
-      return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Todo uuid is required" });
-    }
-
-    if (!content || typeof content !== "string" || !content.trim()) {
-      return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Content is required" });
-    }
 
     // Find the todo by uuid and user_uuid to ensure ownership
     const todo = await Todo.findOne({ where: { uuid, user_uuid } });
@@ -68,14 +56,10 @@ todoRouter.patch("/", validateJwtConfig, authenticateJWT, async (req, res, next)
   }
 });
 
-todoRouter.delete("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
+todoRouter.delete("/", validateJwtConfig, authenticateJWT, validateTodoUuid, async (req, res, next) => {
   try {
     const { user_uuid } = req as CustomRequest;
     const { uuid } = req.body;
-
-    if (!uuid || typeof uuid !== "string") {
-      return res.status(HTTP_RESPONSE_CODES.BAD_REQUEST).json({ message: "Todo uuid is required" });
-    }
 
     const deletedCount = await Todo.destroy({ where: { uuid, user_uuid } });
 

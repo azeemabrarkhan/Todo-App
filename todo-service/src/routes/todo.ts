@@ -36,7 +36,7 @@ todoRouter.get("/", validateJwtConfig, authenticateJWT, async (req, res, next) =
   }
 });
 
-todoRouter.put("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
+todoRouter.patch("/", validateJwtConfig, authenticateJWT, async (req, res, next) => {
   try {
     const { user_uuid } = req as CustomRequest;
     const { uuid, content } = req.body;
@@ -83,7 +83,7 @@ todoRouter.delete("/", validateJwtConfig, authenticateJWT, async (req, res, next
       return res.status(HTTP_RESPONSE_CODES.NOT_FOUND).json({ message: "Todo not found" });
     }
 
-    res.status(HTTP_RESPONSE_CODES.NO_CONTENT).json({ message: "Todo deleted successfully" });
+    res.sendStatus(HTTP_RESPONSE_CODES.NO_CONTENT);
   } catch (err) {
     next(err);
   }

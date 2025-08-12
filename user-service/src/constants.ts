@@ -3,4 +3,5 @@ export const CONSTANTS = {
   API_PORT: 4000,
   EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.com$/,
   MIN_PASSWORD_LENGTH: 6,
+  FRONTEND_ADDRESS: "http://localhost:5173",
 };

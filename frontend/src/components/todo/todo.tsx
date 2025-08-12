@@ -1,7 +1,9 @@
-import { Button } from "../";
-import styles from "./button.module.css";
+import { getTimeDurationSince } from "../../utils/time";
+import Button from "../button/button";
 
-type ButtonPropsType = {
+import styles from "./todo.module.css";
+
+type TodoPropsType = {
   todo: {
     content: string;
     uuid: string;
@@ -12,16 +14,18 @@ type ButtonPropsType = {
   onDelete: () => void;
 };
 
-export const Todo = ({ todo, onEdit, onDelete }: ButtonPropsType) => {
+const Todo = ({ todo, onEdit, onDelete }: TodoPropsType) => {
   const { content, createdAt, updatedAt } = todo;
 
   return (
-    <div className={styles["todo-container"]}>
-      <div className="content">{content}</div>
-      <div className="created">{createdAt}</div>
-      <div className="created">{updatedAt}</div>
+    <div className={styles.todo}>
+      <div>{content}</div>
+      <div>{`Created ${getTimeDurationSince(createdAt)}`}</div>
+      <div>{`Updated ${getTimeDurationSince(updatedAt)}`}</div>
       <Button text="Edit" onClick={onEdit} />
       <Button text="Delete" onClick={onDelete} />
     </div>
   );
 };
+
+export default Todo;

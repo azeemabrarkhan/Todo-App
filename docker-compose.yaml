@@ -51,6 +51,19 @@ services:
     depends_on:
       - todo-db
 
+  todo-frontend:
+    image: todo-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - user-db
+      - todo-db
+      - user-service
+      - todo-service
+
 volumes:
   user-db-data:
   todo-db-data:

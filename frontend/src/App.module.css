@@ -1,0 +1,26 @@
+.nav {
+  min-height: 6rem;
+  padding: 0.5rem 1rem;
+  z-index: 1;
+  border-bottom: 2px solid var(--color--cyan);
+
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-bg);
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+
+  .left {
+    margin-left: 3rem;
+  }
+
+  .right {
+    display: flex;
+    gap: 2rem;
+    margin-right: 3rem;
+  }
+}

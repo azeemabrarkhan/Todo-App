@@ -1,17 +1,24 @@
-import styles from "./button.module.css";
-
 type ButtonPropsType = {
-  onClick: () => void;
+  onClick?: () => void;
   isDisabled?: boolean;
   text?: string;
+  type?: "button" | "submit" | "reset";
+  isSecondary?: boolean;
 };
 
-export const Button = ({ onClick, isDisabled, text }: ButtonPropsType) => {
+const Button = ({ onClick, isDisabled, text, type, isSecondary }: ButtonPropsType) => {
   return (
-    <div className={styles["button-container"]}>
-      <button className={styles.button} onClick={onClick} disabled={isDisabled}>
-        {text && <div className={styles.content}>{text}</div>}
+    <div>
+      <button
+        className={`button ${isSecondary ? "secondary" : ""}`}
+        onClick={onClick}
+        disabled={isDisabled}
+        type={type || "button"}
+      >
+        {text}
       </button>
     </div>
   );
 };
+
+export default Button;

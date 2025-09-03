@@ -1,48 +1,51 @@
-The repository has three subdirectories: the todo service, the user service, and the frontend app. Each directory contains its own Dockerfile. The docker-compose.yaml file is located in the root directory.
+Todo App
+This repository contains a full-stack Todo application with a microservices architecture. The system consists of three main components: a Todo service, a User service, and a frontend application. Each service is containerized using its own Dockerfile, and the entire system can be managed with a single docker-compose.yaml file located in the root directory.
 
 Setup and Run
-Clone the repository: 
+To get the application up and running, follow these steps:
 
-bash
-Copy
-Edit
-https://github.com/azeemabrarkhan/Todo-App
-Place .env file in the root directory (same format as .env.example). It should be placed alongside the docker-compose.yaml file.
+Clone the repository:
 
-Run the terminal as an administrator and build the Docker images:
+git clone [https://github.com/azeemabrarkhan/Todo-App.git](https://github.com/azeemabrarkhan/Todo-App.git)
 
-bash
-Copy
-Edit
+Navigate to the project directory:
+
+cd Todo-App
+
+Configure environment variables:
+Place a .env file in the root directory, alongside the docker-compose.yaml file. The format should be the same as the .env.example file.
+
+Build the Docker images:
+Run the following command from the root directory to build the images for all services.
+
 docker-compose build
+
 Start the services:
+Start the services with the following command:
 
-bash
-Copy
-Edit
 docker-compose up
+
 Service Endpoints
-Todo service accepts HTTP requests (GET, PATCH, POST, DELETE) at:
-http://localhost:5000/api/todo
+The services can be accessed at the following endpoints:
 
-User service listens for sign-up POST requests at:
-http://localhost:4000/api/user/sign-up
+Todo service: Accepts HTTP requests (GET, PATCH, POST, DELETE) at http://localhost:5000/api/todo
 
-User service listens for login POST requests at:
-http://localhost:4000/api/user/login
+User service (Sign-up): Listens for POST requests at http://localhost:4000/api/user/sign-up
 
-Frontend can be accessed at:
-http://localhost:5173
+User service (Login): Listens for POST requests at http://localhost:4000/api/user/login
+
+Frontend: The web application can be accessed at http://localhost:5173
 
 API Documentation
-The API documentation can be accessed at:
-https://azeemabrarkhan-2649248.postman.co/workspace/Azeem-Abrar-Khan's-Workspace~894a52cc-947c-4b6f-88b3-7eea6ea7c693/collection/47488449-df7b0549-8686-4b24-98fa-ea33bdb3b460?action=share&creator=47488449
+The complete API documentation, including request examples and schemas, can be accessed through the following Postman collection:
+
+API Documentation
 
 Running Unit Tests
-Unit test cases can be run from the root directory:
+Unit tests for the services can be run from the root directory using these commands:
 
-npm run test:user — test user service
+npm run test:user — Tests the user service.
 
-npm run test:todo — test todo service
+npm run test:todo — Tests the todo service.
 
-npm run test:all — test both the user and todo services
+npm run test:all — Tests both the user and todo services.

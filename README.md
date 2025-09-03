@@ -1,51 +1,76 @@
-Todo App
-This repository contains a full-stack Todo application with a microservices architecture. The system consists of three main components: a Todo service, a User service, and a frontend application. Each service is containerized using its own Dockerfile, and the entire system can be managed with a single docker-compose.yaml file located in the root directory.
+# Todo App
 
-Setup and Run
-To get the application up and running, follow these steps:
+This repository contains a **full-stack Todo application** with a **microservices architecture**. The system consists of three main components: a **Todo service**, a **User service**, and a **frontend application**. Each service is containerized using its own Dockerfile, and the entire system can be managed with a single `docker-compose.yaml` file located in the root directory.
 
-Clone the repository:
+---
 
-git clone [https://github.com/azeemabrarkhan/Todo-App.git](https://github.com/azeemabrarkhan/Todo-App.git)
+## 🚀 Setup and Run
 
-Navigate to the project directory:
+Follow these steps to get the application up and running:
 
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/azeemabrarkhan/Todo-App.git
+```
+
+### 2. Navigate to the project directory
+
+```bash
 cd Todo-App
+```
 
-Configure environment variables:
-Place a .env file in the root directory, alongside the docker-compose.yaml file. The format should be the same as the .env.example file.
+### 3. Configure environment variables
 
-Build the Docker images:
-Run the following command from the root directory to build the images for all services.
+Place a `.env` file in the root directory alongside the `docker-compose.yaml` file. The format should match `.env.example`.
 
+### 4. Build the Docker images
+
+Run the following command from the root directory to build images for all services:
+
+```bash
 docker-compose build
+```
 
-Start the services:
-Start the services with the following command:
+### 5. Start the services
 
+```bash
 docker-compose up
+```
 
-Service Endpoints
-The services can be accessed at the following endpoints:
+---
 
-Todo service: Accepts HTTP requests (GET, PATCH, POST, DELETE) at http://localhost:5000/api/todo
+## 🔗 Service Endpoints
 
-User service (Sign-up): Listens for POST requests at http://localhost:4000/api/user/sign-up
+The services can be accessed at the following URLs:
 
-User service (Login): Listens for POST requests at http://localhost:4000/api/user/login
+* **Todo service**: Handles HTTP requests (`GET`, `PATCH`, `POST`, `DELETE`)
+  `http://localhost:5000/api/todo`
 
-Frontend: The web application can be accessed at http://localhost:5173
+* **User service (Sign-up)**: Handles `POST` requests
+  `http://localhost:4000/api/user/sign-up`
 
-API Documentation
-The complete API documentation, including request examples and schemas, can be accessed through the following Postman collection:
+* **User service (Login)**: Handles `POST` requests
+  `http://localhost:4000/api/user/login`
 
-API Documentation
+* **Frontend**: The web application
+  `http://localhost:5173`
 
-Running Unit Tests
-Unit tests for the services can be run from the root directory using these commands:
+---
 
-npm run test:user — Tests the user service.
+## 📚 API Documentation
 
-npm run test:todo — Tests the todo service.
+The complete API documentation, including request examples and schemas, is available through this **Postman collection**:
+[API Documentation](#) <!-- Replace `#` with actual link -->
 
-npm run test:all — Tests both the user and todo services.
+---
+
+## 🤛 Running Unit Tests
+
+Unit tests for the services can be run from the root directory:
+
+```bash
+npm run test:user   # Tests the User service
+npm run test:todo   # Tests the Todo service
+npm run test:all    # Tests both User and Todo services
+```

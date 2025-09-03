@@ -61,11 +61,11 @@ The services can be accessed at the following URLs:
 ## 📚 API Documentation
 
 The complete API documentation, including request examples and schemas, is available through this **Postman collection**:
-[API Documentation](#) <https://azeemabrarkhan-2649248.postman.co/workspace/Azeem-Abrar-Khan's-Workspace~894a52cc-947c-4b6f-88b3-7eea6ea7c693/collection/47488449-df7b0549-8686-4b24-98fa-ea33bdb3b460?action=share&creator=47488449>
+[API Documentation](https://azeemabrarkhan-2649248.postman.co/workspace/Azeem-Abrar-Khan's-Workspace~894a52cc-947c-4b6f-88b3-7eea6ea7c693/collection/47488449-df7b0549-8686-4b24-98fa-ea33bdb3b460?action=share&creator=47488449)
 
 ---
 
-## 🤛 Running Unit Tests
+## 🧪 Running Unit Tests
 
 Unit tests for the services can be run from the root directory:
 

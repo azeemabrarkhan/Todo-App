@@ -1,6 +1,6 @@
 # Todo App
 
-This repository contains a **full-stack Todo application** with a **microservices architecture**. The system consists of three main components: a **Todo service**, a **User service**, and a **frontend application**. Each service is containerized using its own Dockerfile, and the entire system can be managed with a single `docker-compose.yaml` file located in the root directory.
+This repository contains a **full-stack Todo application** with a **microservices architecture** along with unit tests. The system consists of three main components: a **Todo service**, a **User service**, and a **frontend application**. Each service is containerized using its own Dockerfile, and the entire system can be managed with a single `docker-compose.yaml` file located in the root directory.
 
 ---
 
